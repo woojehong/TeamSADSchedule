@@ -11,7 +11,7 @@ import NoticePopup from './components/NoticePopup';
 function Loading() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-pulse text-lg font-black bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">SAD</div>
+      <div className="animate-pulse text-lg font-black bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">Team SAD</div>
     </div>
   );
 }

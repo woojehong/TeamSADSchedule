@@ -66,7 +66,7 @@ export default function ConfirmAddModal({ open, onClose, raid, role }) {
           userId: null,
           nickname: '관리자가 생성',
           guildId: 'sad',
-          guildName: 'SAD 공격대',
+          guildName: 'Team SAD',
           guildColor: '#C9A84C',
           charId: null,
           charName: charName.trim(),

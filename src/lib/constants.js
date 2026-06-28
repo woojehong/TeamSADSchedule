@@ -226,7 +226,7 @@ export const SERVERS = [
 export const UNION_GUILD_ID = 'union-badge';
 
 export const SEED_GUILDS = [
-  { id: 'sad', name: 'SAD 공격대', color: '#C9A84C', logoPath: '', isNone: false },
+  { id: 'sad', name: 'Team SAD', color: '#C9A84C', logoPath: '', isNone: false },
   { id: 'none', name: '소속 없음', color: '#64748b', logoPath: '', isNone: true },
   // 연합 뱃지(코드 참조 보존용) — 단일 공대에서는 UI 노출 안 함
   { id: UNION_GUILD_ID, name: '연합', badgeName: '연합', color: '#a78bfa', logoPath: '', isUnion: true, isNone: false },

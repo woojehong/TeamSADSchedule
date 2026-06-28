@@ -332,7 +332,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
             className="input-base"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="예: SAD 공격대 정규 일정"
+            placeholder="예: Team SAD 정규 일정"
             maxLength={30}
           />
         </div>

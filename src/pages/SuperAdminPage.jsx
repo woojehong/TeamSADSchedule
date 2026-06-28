@@ -80,7 +80,7 @@ function SuperLogin() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4">
       <h1 className="text-2xl font-black mb-1">
-        <span className="bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">SAD</span> 시스템 관리
+        <span className="bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">Team SAD</span> 시스템 관리
       </h1>
       <p className="text-sm text-base-400 mb-6">
         {bootstrap ? '최초 실행 — 슈퍼관리자 계정을 생성합니다' : '슈퍼관리자 인증'}
@@ -1441,7 +1441,7 @@ export default function SuperAdminPage() {
   if (!authReady) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="animate-pulse text-lg font-black bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">SAD</span>
+        <span className="animate-pulse text-lg font-black bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">Team SAD</span>
       </div>
     );
   }
@@ -1459,7 +1459,7 @@ export default function SuperAdminPage() {
       <header className="sticky top-0 z-40 bg-base-900/90 backdrop-blur border-b border-base-800">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <p className="font-black">
-            <span className="bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">SAD</span>{' '}
+            <span className="bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">Team SAD</span>{' '}
             <span className="text-indigo-400 text-sm font-bold">시스템 관리</span>
           </p>
           <div className="flex items-center gap-3">

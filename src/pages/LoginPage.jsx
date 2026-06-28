@@ -172,9 +172,8 @@ export default function LoginPage() {
       {/* Logo */}
       <div className="text-center mb-8">
         <h1 className="text-5xl font-black tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">
-          SAD
+          Team SAD
         </h1>
-        <p className="mt-1 font-semibold tracking-[0.3em] bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">한.길.련</p>
       </div>
 
       <div className="w-full max-w-md card p-6">
