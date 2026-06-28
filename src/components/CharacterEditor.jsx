@@ -60,7 +60,7 @@ export default function CharacterEditor({ value, onChange }) {
           className="input-base"
           value={value.ilvl || ''}
           onChange={(e) => set({ ilvl: e.target.value.replace(/\D/g, '') })}
-          placeholder="예: 639"
+          placeholder="예: 290"
           inputMode="numeric"
           maxLength={5}
         />

@@ -58,11 +58,8 @@ export default function Header() {
               <span className="text-2xl font-black tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent group-hover:to-indigo-300 transition">
                 SAD
               </span>
-              <span className="text-sm font-semibold tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent group-hover:to-indigo-300 transition">한.길.련</span>
+              <span className="text-sm font-semibold tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent group-hover:to-indigo-300 transition">공격대</span>
             </div>
-            <span className="text-[10px] text-base-500 tracking-wider leading-none">
-              Korean Wow Guild Union · 한국길드연합
-            </span>
           </Link>
           <div className="flex items-center gap-2">
             {profileButton}
@@ -78,11 +75,8 @@ export default function Header() {
               <span className="text-2xl font-black tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">
                 SAD
               </span>
-              <span className="text-xs font-semibold tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">한.길.련</span>
+              <span className="text-xs font-semibold tracking-tight bg-gradient-to-b from-white to-base-400 bg-clip-text text-transparent">공격대</span>
             </div>
-            <span className="text-[9px] text-base-500 tracking-wider leading-none">
-              Korean Wow Guild Union · 한국길드연합
-            </span>
           </Link>
           <div className="flex items-center justify-center flex-wrap gap-2">
             {profileButton}

@@ -464,7 +464,7 @@ export default function ApplyModal({ open, onClose, raid, apps, existingApp }) {
                   className="input-base"
                   value={ilvl}
                   onChange={(e) => setIlvl(e.target.value.replace(/\D/g, ''))}
-                  placeholder="예: 489"
+                  placeholder="예: 290"
                   inputMode="numeric"
                 />
               </div>

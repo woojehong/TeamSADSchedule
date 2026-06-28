@@ -286,7 +286,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
             className="input-base"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="예: SAD 공격대 연합 길드 레이드 신화 학원파티"
+            placeholder="예: SAD 공격대 정규 일정"
             maxLength={30}
           />
         </div>
@@ -304,7 +304,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
                   : 'border-base-700 text-base-400 hover:text-base-200'
               }`}
             >
-              연합 길드 레이드
+              글로벌 레이드
             </button>
             <button
               type="button"
@@ -350,7 +350,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
                   checked={isAllAllowed}
                   onChange={(e) => setAllowedGuilds(e.target.checked ? 'all' : [partyType])}
                 />
-                <span className="text-sm font-medium">모두 (연합 전체)</span>
+                <span className="text-sm font-medium">모두 (글로벌 전체)</span>
               </label>
               {!isAllAllowed && sortedGuilds.map((g) => (
                 <label
