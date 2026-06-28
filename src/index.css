@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+}
+
+body {
+  @apply bg-base-900 text-base-100 antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-base-600 rounded-full;
+}
+
+@keyframes kwgu-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes kwgu-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+.kwgu-badge-shimmer  { animation: kwgu-shimmer 2s linear infinite; }
+.kwgu-badge-pulse    { animation: kwgu-pulse 1.8s ease-in-out infinite; }
+
+@keyframes kwgu-flicker {
+  0%, 94%, 100% { opacity: 1; }
+  95%           { opacity: 0.25; }
+  96%           { opacity: 0.85; }
+  97%           { opacity: 0.15; }
+  98%           { opacity: 0.9; }
+  99%           { opacity: 0.4; }
+}
+.kwgu-badge-flicker { animation: kwgu-flicker 3.5s ease-in-out infinite; }
+
+@keyframes kwgu-toast-in {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.kwgu-toast-in { animation: kwgu-toast-in 0.22s ease-out; }
+
+/* 공통 텍스트 외곽선 — 어떤 배경/색 위에서도 대비 확보 (흰글씨+검정 외곽선) */
+.text-outline {
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.9), 1px -1px 0 rgba(0, 0, 0, 0.9),
+    -1px 1px 0 rgba(0, 0, 0, 0.9), 1px 1px 0 rgba(0, 0, 0, 0.9),
+    0 0 2px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Guild flag (CSS wave) ───────────────────────────────────── */
+@keyframes kwgu-flag-wave {
+  0%, 100% { transform: perspective(500px) rotateY(0deg)  skewY(0.4deg); }
+  25%      { transform: perspective(500px) rotateY(-7deg) skewY(-0.8deg); }
+  50%      { transform: perspective(500px) rotateY(0deg)  skewY(0.8deg); }
+  75%      { transform: perspective(500px) rotateY(7deg)  skewY(-0.4deg); }
+}
+@keyframes kwgu-flag-sheen {
+  0%   { transform: translateX(-160%) skewX(-18deg); }
+  100% { transform: translateX(260%)  skewX(-18deg); }
+}
+.kwgu-flag-cloth {
+  transform-origin: top center;
+  animation: kwgu-flag-wave 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+.kwgu-flag-sheen {
+  animation: kwgu-flag-sheen 4.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kwgu-flag-cloth, .kwgu-flag-sheen { animation: none; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2.5 rounded-lg bg-gold hover:bg-gold-bright active:scale-[0.98] text-[#191400] font-semibold transition disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-ghost {
+    @apply px-4 py-2.5 rounded-lg bg-base-800 hover:bg-base-700 active:scale-[0.98] text-base-100 font-medium border border-base-600 transition disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-danger {
+    @apply px-4 py-2.5 rounded-lg bg-red-500/10 hover:bg-red-500 active:scale-[0.98] text-red-300 hover:text-white font-semibold border border-red-500/40 transition disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .input-base {
+    @apply w-full px-4 py-2.5 rounded-lg bg-base-900 border border-base-600 focus:border-gold focus:outline-none text-base-100 placeholder-base-400 transition;
+  }
+  .card {
+    @apply bg-base-800 border border-base-600 rounded-2xl;
+  }
+  .label-sm {
+    @apply block text-sm font-semibold text-base-100 mb-1.5;
+  }
+}
