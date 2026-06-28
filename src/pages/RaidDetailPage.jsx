@@ -20,6 +20,7 @@ import BenchCard from '../components/BenchCard';
 import { useToast } from '../components/Toast';
 import ApplyModal from '../components/ApplyModal';
 import ReservationModal from '../components/ReservationModal';
+import ConfirmAddModal from '../components/ConfirmAddModal';
 import AdminAppEditModal from '../components/AdminAppEditModal';
 import RaidFormModal from '../components/RaidFormModal';
 import Modal from '../components/Modal';
@@ -53,7 +54,7 @@ const STATUS_META = {
   bench: { label: '벤치', color: '#a3e635' },
 };
 
-function SectionHeader({ label, role, count, cap, adminMode, onAdd }) {
+function SectionHeader({ label, role, count, cap, adminMode, onAdd, onAddConfirm }) {
   const roleColor = ROLE_COLORS[role] || '#94a3b8';
   return (
     <div className="flex items-center justify-between mb-2">
@@ -62,13 +63,23 @@ function SectionHeader({ label, role, count, cap, adminMode, onAdd }) {
         <span className={countFillColor(count, cap)}>{count}/{cap}</span>
       </p>
       {adminMode && (
-        <button
-          type="button"
-          onClick={onAdd}
-          className="text-xs px-2 py-1 rounded-lg bg-base-700 hover:bg-base-600 font-semibold transition"
-        >
-          + 예약
-        </button>
+        <div className="flex gap-1.5">
+          <button
+            type="button"
+            onClick={onAddConfirm}
+            className="text-xs px-2 py-1 rounded-lg font-semibold transition"
+            style={{ backgroundColor: 'rgba(201,168,76,0.15)', color: '#E4C46A', border: '1px solid rgba(201,168,76,0.4)' }}
+          >
+            + 확정
+          </button>
+          <button
+            type="button"
+            onClick={onAdd}
+            className="text-xs px-2 py-1 rounded-lg bg-base-700 hover:bg-base-600 font-semibold transition"
+          >
+            + 예약
+          </button>
+        </div>
       )}
     </div>
   );
@@ -104,6 +115,7 @@ export default function RaidDetailPage() {
   const [applyOpen, setApplyOpen] = useState(false);
   const [editApply, setEditApply] = useState(false);
   const [reserveRole, setReserveRole] = useState(null);
+  const [confirmRole, setConfirmRole] = useState(null);
   const [adminTarget, setAdminTarget] = useState(null);
   const [raidEditOpen, setRaidEditOpen] = useState(false);
   const [cancelConfirm, setCancelConfirm] = useState(false);
@@ -448,6 +460,7 @@ export default function RaidDetailPage() {
               cap={caps.tank}
               adminMode={adminView}
               onAdd={() => setReserveRole('tank')}
+              onAddConfirm={() => setConfirmRole('tank')}
             />
             <div className="flex flex-wrap justify-center gap-1.5">
               {renderCards(derived.tanks, (a) => derived.activeRank[a.id])}
@@ -462,6 +475,7 @@ export default function RaidDetailPage() {
               cap={caps.healer}
               adminMode={adminView}
               onAdd={() => setReserveRole('healer')}
+              onAddConfirm={() => setConfirmRole('healer')}
             />
             <div className="flex flex-wrap justify-center gap-1.5">
               {renderCards(derived.healers, (a) => derived.activeRank[a.id])}
@@ -476,6 +490,7 @@ export default function RaidDetailPage() {
               cap={caps.dps}
               adminMode={adminView}
               onAdd={() => setReserveRole('dps')}
+              onAddConfirm={() => setConfirmRole('dps')}
             />
 
             {/* 근딜 */}
@@ -576,6 +591,12 @@ export default function RaidDetailPage() {
         onClose={() => setReserveRole(null)}
         raid={raid}
         role={reserveRole || 'dps'}
+      />
+      <ConfirmAddModal
+        open={!!confirmRole}
+        onClose={() => setConfirmRole(null)}
+        raid={raid}
+        role={confirmRole || 'dps'}
       />
       <AdminAppEditModal
         open={!!adminTarget}

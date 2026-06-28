@@ -178,3 +178,28 @@ export function setUserNotice(userId, notice) {
 export function clearUserNotice(userId) {
   return updateDoc(doc(db, 'users', userId), { notice: null });
 }
+
+
+// ── Copy applications from a past raid ──────────────────────────────
+
+/** Copies every application (and its memo) from one raid into another. */
+export async function copyApplications(srcRaidId, destRaidId) {
+  const [appsSnap, memosSnap] = await Promise.all([
+    getDocs(collection(db, 'raids', srcRaidId, 'apps')),
+    getDocs(collection(db, 'raids', srcRaidId, 'memos')),
+  ]);
+  const memoMap = {};
+  memosSnap.docs.forEach((d) => { memoMap[d.id] = d.data(); });
+  const batch = writeBatch(db);
+  appsSnap.docs.forEach((d) => {
+    batch.set(doc(db, 'raids', destRaidId, 'apps', d.id), {
+      ...d.data(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    if (memoMap[d.id]) {
+      batch.set(doc(db, 'raids', destRaidId, 'memos', d.id), memoMap[d.id]);
+    }
+  });
+  await batch.commit();
+}

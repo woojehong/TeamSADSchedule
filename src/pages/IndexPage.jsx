@@ -333,6 +333,11 @@ export default function IndexPage() {
       <RaidFormModal
         open={formOpen}
         dateKey={formDateKey || undefined}
+        recentRaids={raids
+          .filter((r) => !r.deleted)
+          .slice()
+          .sort((a, b) => (b.dateKey || '').localeCompare(a.dateKey || ''))
+          .slice(0, 30)}
         onClose={() => setFormOpen(false)}
       />
     </div>

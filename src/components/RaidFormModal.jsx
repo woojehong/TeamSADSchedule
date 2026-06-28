@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { DIFFICULTIES, UNION_LEADER_LABEL, TANK_CAP } from '../lib/constants';
 import { buildRaidTimes, toDateKey, sortGuilds } from '../lib/utils';
-import { createRaid, updateRaid, softDeleteRaid } from '../lib/db';
+import { createRaid, updateRaid, softDeleteRaid, copyApplications } from '../lib/db';
 import Modal from './Modal';
 
 const TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -74,7 +74,7 @@ function TimeInput({ label, value, onChange, hint }) {
 
 // ── Modal ────────────────────────────────────────────────────────────
 
-export default function RaidFormModal({ open, onClose, dateKey, raid, applicants = [] }) {
+export default function RaidFormModal({ open, onClose, dateKey, raid, applicants = [], recentRaids = [] }) {
   const { guilds, profile } = useApp();
   const isEdit = !!raid;
 
@@ -98,6 +98,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [copySourceId, setCopySourceId] = useState('');
 
   const defaultDateKey = dateKey || toDateKey(new Date());
 
@@ -140,6 +141,7 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
       setPartyType('union');
       setAllowedGuilds('all');
       setAllowNoGuild(false);
+      setCopySourceId('');
     }
   }, [open, raid]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -232,7 +234,8 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
       if (isEdit) {
         await updateRaid(raid.id, payload);
       } else {
-        await createRaid(payload);
+        const newRaidId = await createRaid(payload);
+        if (copySourceId) await copyApplications(copySourceId, newRaidId);
       }
       onClose(true);
     } catch {
@@ -258,6 +261,24 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
     [sortedGuilds, profile]
   );
 
+  const applyCopyFrom = (src) => {
+    if (!src) return;
+    const fmt = (d) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    setTitle(src.title || '');
+    setDifficulty(src.difficulty || 'normal');
+    setStartTime(fmt(src.startAt.toDate()));
+    setEndTime(fmt(src.endAt.toDate()));
+    setHealerCap(src.healerCap);
+    setTotalCap(src.totalCap ?? DIFFICULTIES[src.difficulty].totalCap);
+    setLeader(src.leader || UNION_LEADER_LABEL);
+    setNoIlvlLimit(src.minIlvl == null);
+    setMinIlvl(src.minIlvl == null ? '' : String(src.minIlvl));
+    setDescription(src.description || '');
+    setPartyType(src.partyType || 'union');
+    setAllowedGuilds(src.allowedGuilds ?? 'all');
+    setAllowNoGuild(src.allowNoGuild !== false);
+  };
+
   return (
     <Modal
       open={open}
@@ -276,6 +297,31 @@ export default function RaidFormModal({ open, onClose, dateKey, raid, applicants
               value={localDateKey}
               onChange={(e) => setLocalDateKey(e.target.value)}
             />
+          </div>
+        )}
+
+        {/* 과거 레이드 복사 (create mode only) */}
+        {!isEdit && recentRaids.length > 0 && (
+          <div>
+            <label className="label-sm">
+              과거 레이드에서 복사 <span className="text-base-400 font-normal">(날짜 빼고 인원·설정 전부)</span>
+            </label>
+            <select
+              className="input-base"
+              value={copySourceId}
+              onChange={(e) => {
+                const id = e.target.value;
+                setCopySourceId(id);
+                applyCopyFrom(recentRaids.find((r) => r.id === id));
+              }}
+            >
+              <option value="">선택 안 함 (새로 작성)</option>
+              {recentRaids.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.dateKey} · {r.title}
+                </option>
+              ))}
+            </select>
           </div>
         )}
 
